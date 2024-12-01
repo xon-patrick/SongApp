@@ -5,6 +5,7 @@
 
 # build?
 
-instal the used libraries:
+install the needed libraries:
 **"pip install numpy matplotlib pyaudio tkinter"**
--> python app.py
+
+then run -> python app.py
