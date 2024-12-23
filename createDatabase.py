@@ -10,7 +10,7 @@ def create_database(db_file):
     cursor.execute('''
         CREATE TABLE IF NOT EXISTS songs (
             id INTEGER PRIMARY KEY,
-            file_name TEXT UNIQUE,
+            file_path TEXT UNIQUE,
             song_name TEXT,
             artist TEXT,
             features BLOB,
@@ -46,7 +46,7 @@ def insert_song_data(db_file, directory):
                 print(f"Image for {file_name} not found, skipping.")
                 continue
 
-            cursor.execute('SELECT 1 FROM songs WHERE file_name = ?', (file_name,))
+            cursor.execute('SELECT 1 FROM songs WHERE file_path = ?', (file_path,))
             if cursor.fetchone():
                 print(f"Song {file_name} already exists in the database, skipping.")
                 continue
@@ -66,8 +66,8 @@ def insert_song_data(db_file, directory):
             features = extract_features(audio_data, samplerate)
             image = load_image(image_path)
 
-            cursor.execute('INSERT INTO songs (file_name, song_name, artist, features, image) VALUES (?, ?, ?, ?, ?)',
-                           (file_name, song_name, artist, features.tobytes(), image))
+            cursor.execute('INSERT INTO songs (file_path, song_name, artist, features, image) VALUES (?, ?, ?, ?, ?)',
+                           (file_path, song_name, artist, features.tobytes(), image))
 
     conn.commit()
     conn.close()
