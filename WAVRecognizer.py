@@ -1,5 +1,5 @@
 # Audio processing
-import joblib
+import pickle
 import sqlite3
 import io
 import threading
@@ -14,9 +14,9 @@ import pyaudio
 import matplotlib.pyplot as plt
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 
-
 # Load the trained model
-model = joblib.load('trainedModel.pkl')
+with open('trainedModel.pkl', 'rb') as f:
+    model = pickle.load(f)
 
 ### Constants for real-time audio visualization ###
 CHUNK = 4096

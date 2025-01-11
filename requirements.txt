@@ -1,0 +1,7 @@
+PyAudio
+numpy
+matplotlib
+scipy
+joblib
+pillow
+scikit-learn

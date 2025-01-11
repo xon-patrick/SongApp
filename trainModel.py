@@ -4,7 +4,7 @@ from sklearn.neural_network import MLPClassifier
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score
 from scipy.ndimage import gaussian_filter1d
-import joblib
+import pickle
 
 
 def load_data_from_db(db_file, feature_length=1024):
@@ -65,4 +65,5 @@ features, labels = load_data_from_db('songs.db')
 model = train_model(features, labels)
 
 # Save trained model
-joblib.dump(model, 'trainedModel.pkl')
+with open('trainedModel.pkl', 'wb') as f:
+    pickle.dump(model, f)

@@ -21,10 +21,13 @@ def create_database(db_file):
     conn.close()
 
 
-def extract_features(audio_data, samplerate):
-    n = len(audio_data)
-    fft_magnitude = np.abs(np.fft.rfft(audio_data)) / n
-    return fft_magnitude
+def extract_features(audio_data, samplerate, feature_length=1024):
+    feature = np.abs(np.fft.rfft(audio_data)) / len(audio_data)
+    if len(feature) > feature_length:
+        feature = feature[:feature_length]
+    elif len(feature) < feature_length:
+        feature = np.pad(feature, (0, feature_length - len(feature)), 'constant')
+    return feature
 
 
 def load_image(image_path):
@@ -75,4 +78,4 @@ def insert_song_data(db_file, directory):
 
 # Example usage
 create_database('songs.db')
-insert_song_data('songs.db', 'Songs')
+insert_song_data('songs.db', 'test/Songs')
